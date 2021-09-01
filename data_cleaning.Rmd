@@ -1,0 +1,97 @@
+---
+title: "EDA"
+author: "Peyton Chen"
+date: "8/31/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+```
+
+
+```{r}
+# vacc_raw_data <- read.csv("data/time_series_covid19_vaccine_global.csv")
+# vacc_data <- vacc_raw_data[,c("Country_Region","Date", "Doses_admin",
+#                            "People_partially_vaccinated", "People_fully_vaccinated")]
+# vacc_data
+```
+
+```{r}
+covid_raw_data <- read.csv("data/owid-covid-data.csv")
+covid_data <- covid_raw_data[, c("location","date", 
+                                 "total_cases", "new_cases",
+                                 "total_deaths", "new_deaths",
+                                 "icu_patients", "hosp_patients",
+                                 "total_vaccinations","people_vaccinated",
+                                 "people_fully_vaccinated",
+                                 "population", "population_density",
+                                 "gdp_per_capita")]
+
+covid_data[,'date'] <- as.Date(covid_data[["date"]],"%Y-%m-%d")
+
+covid_data_split <- split(covid_data, covid_data$location)
+
+covid_data_clean <- data.frame()
+
+for (i in 1:length(covid_data_split)) {
+  covid_data_temp <- covid_data_split[i][[1]]
+  
+  # Fill missing values of the first row with 0's
+  covid_data_temp[1,][is.na(covid_data_temp[1,])] <- 0
+  
+  # Fill the missing values using the value right above it. Values in this columns are cumulative
+  covid_data_temp <- covid_data_temp  %>%
+    tidyr::fill(total_cases, .direction = "downup") %>% 
+    tidyr::fill(total_deaths, .direction = "downup") %>% 
+    tidyr::fill(total_vaccinations, .direction = "downup") %>% 
+    tidyr::fill(people_vaccinated, .direction = "downup") %>% 
+    tidyr::fill(people_fully_vaccinated, .direction = "downup")
+
+  covid_data_temp[c("new_cases", "new_deaths")][is.na(covid_data_temp[c("new_cases", "new_deaths")])] <- 0
+
+  covid_data_clean <- rbind(covid_data_clean,covid_data_temp)
+}
+
+```
+
+
+```{r}
+
+# Separate continent and international data from country data
+covid_data_others_clean <- covid_data_clean[covid_data_clean$location %in% c("Africa", "Asia", "Europe", "European Union", "International", "North America", "South America", "World"),]
+
+covid_data_country_clean <- covid_data_clean[!(covid_data_clean$location %in% c("Africa", "Asia", "Europe", "European Union", "International", "North America", "South America", "World")),]
+
+```
+
+
+```{r}
+summary(covid_data_clean_country)
+
+```
+
+```{r}
+write.csv(x=covid_data_country_clean, file="data/covid_data_country_clean.csv")
+write.csv(x=covid_data_others_clean, file="data/covid_data_others_clean.csv")
+write.csv(x=covid_data_clean, file="data/covid_data_clean.csv")
+
+```
+
+
+
+
+
+```{r}
+
+ggplot(data = covid_data_clean_country, aes(date, new_cases))+
+  geom_point()
+
+```
+
+
