@@ -4,6 +4,7 @@ library(ggiraph)
 library(dplyr)
 library(rlang)
 library(shiny)
+library(DT)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -49,7 +50,10 @@ ui <- fluidPage(
 
         # Show a plot of the generated distribution
         mainPanel(
-           plotOutput("distPlot")
+           plotOutput("distPlot"),
+           DT::dataTableOutput(outputId = "tb")
+           
+           
         )
     )
 )
@@ -137,6 +141,58 @@ server <- function(input, output) {
              x = "Lat", y = "Long") +
         scale_fill_gradient(low = "#3366CC", high = "#000066")
     })
+    
+    
+    
+    output$tb <- DT::renderDataTable({
+      
+      temp <- covid_data %>% 
+        filter(date == input$DatesMerge)
+      
+      temp_covid <- left_join(x = world_data_short, y = temp, by = c("region" = "location"))
+      
+      if (input$Continent == "North_America") {
+        temp_covid <- temp_covid %>%
+          filter((lat >= 8 & lat <= 90)) %>% 
+          filter((long <= -20 & long >= -170.1667))
+        
+      } else if (input$Continent == "South_America"){
+        temp_covid <- temp_covid %>%
+          filter((lat >= -60 & lat <= 20)) %>% 
+          filter((long >= -100 & long <= -30))
+        
+      } else if (input$Continent == "Asia") {
+        temp_covid <- temp_covid %>%
+          filter((lat >= -10 & lat <= 90)) %>% 
+          filter((long >= 50 & long <= 170))
+        
+      } else if (input$Continent == "Europe") {
+        temp_covid <- temp_covid %>%
+          filter((lat >= 15 & lat <= 90)) %>% 
+          filter((long >= -20 & long <= 50))
+        
+      } else if (input$Continent == "Africa") {
+        temp_covid <- temp_covid %>%
+          filter((lat >= -40 & lat <= 40)) %>% 
+          filter((long >= -30 & long <= 60))  
+        
+      } else if (input$Continent == "Australia") {
+        temp_covid <- temp_covid %>%
+          filter((lat >= -50 & lat <= -10)) %>% 
+          filter((long >= 80 & long <= 180))  
+        
+      } else {
+        temp_covid <- temp_covid %>%
+          filter((lat >= -60 & lat <= 90))
+      }
+      
+      temp_covid %>% select(region,input$Variable) %>% unique()
+    })
+    
+    
+    
+    
+    
 }
 
 # Run the application 
