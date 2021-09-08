@@ -30,6 +30,20 @@ ui <- fluidPage(
             people_fully_vaccinated = "people_fully_vaccinated",
             hosp_patients = "hosp_patients"
           )
+        ),
+        selectInput(
+          inputId = "Continent",
+          label = "Continent:",
+          choices = c(
+            "",
+            Africa = "Africa",
+            Asia = "Asia",
+            Australia = "Australia",
+            Europe = "Europe",
+            North_America  = "North_America",
+            South_America = "South_America",
+            World = "World"
+          )
         )
       ),
 
@@ -77,10 +91,50 @@ server <- function(input, output) {
       
       temp_covid <- left_join(x = world_data_short, y = temp, by = c("region" = "location"))
       
-      ggplot() + 
-        geom_polygon_interactive(data = subset(temp_covid, lat >= -60 & lat <= 90), size = 0.1, 
-                                 aes(x = long, y = lat, fill = !! sym(input$Variable), group = group)) +
+      if (input$Continent == "North_America") {
+        temp_covid <- temp_covid %>%
+          filter((lat >= 8 & lat <= 90)) %>% 
+          filter((long <= -20 & long >= -170.1667))
+        
+      } else if (input$Continent == "South_America"){
+        temp_covid <- temp_covid %>%
+          filter((lat >= -60 & lat <= 20)) %>% 
+          filter((long >= -100 & long <= -30))
+        
+      } else if (input$Continent == "Asia") {
+        temp_covid <- temp_covid %>%
+          filter((lat >= -10 & lat <= 90)) %>% 
+          filter((long >= 50 & long <= 180))
+        
+      } else if (input$Continent == "Europe") {
+        temp_covid <- temp_covid %>%
+          filter((lat >= 15 & lat <= 90)) %>% 
+          filter((long >= -20 & long <= 50))
+        
+      } else if (input$Continent == "Africa") {
+        temp_covid <- temp_covid %>%
+          filter((lat >= -40 & lat <= 40)) %>% 
+          filter((long >= -30 & long <= 60))  
+        
+      } else if (input$Continent == "Australia") {
+        temp_covid <- temp_covid %>%
+          filter((lat >= -50 & lat <= -10)) %>% 
+          filter((long >= 80 & long <= 180))  
+        
+      } else {
+        temp_covid <- temp_covid %>%
+          filter((lat >= -60 & lat <= 90))
+      }
+      
+      
+      
+      ggplot() +
+        geom_polygon_interactive(data = temp_covid,
+                                 size = 0.1,
+                                 aes(x = long, y = lat, 
+                                     fill = !! sym("new_cases"), group = group)) +
         theme(legend.position="bottom") + theme_bw()
+      
     })
 }
 
