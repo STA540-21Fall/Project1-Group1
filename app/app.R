@@ -135,7 +135,7 @@ server <- function(input, output) {
         theme(legend.position="bottom") + theme_bw() + coord_fixed() +
         labs(title = "Covid Cases and Vaccinations", subtitle = "by Country", 
              x = "Lat", y = "Long") +
-        scale_fill_gradient(low = "#3366CC", high = "#000066")
+        scale_fill_gradient(low = "#CC6666", high = "#000066")
     })
 }
 
