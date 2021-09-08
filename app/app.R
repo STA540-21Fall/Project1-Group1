@@ -9,7 +9,7 @@ library(shiny)
 ui <- fluidPage(
 
     # Application title
-    titlePanel("New Covid Cases by Country"),
+    titlePanel("Covid Cases and Vaccinations by Country"),
 
     sidebarLayout(
       sidebarPanel(
@@ -129,12 +129,13 @@ server <- function(input, output) {
       
       
       ggplot() +
-        geom_polygon_interactive(data = temp_covid,
-                                 size = 0.1,
+        geom_polygon_interactive(data = temp_covid, size = 0.1,
                                  aes(x = long, y = lat, 
-                                     fill = !! sym("new_cases"), group = group)) +
-        theme(legend.position="bottom") + theme_bw()
-      
+                                     fill = !! sym(input$Variable), group = group)) +
+        theme(legend.position="bottom") + theme_bw() + coord_fixed() +
+        labs(title = "Covid Cases and Vaccinations", subtitle = "by Country", 
+             x = "Lat", y = "Long") +
+        scale_fill_gradient(low = "#3366CC", high = "#000066")
     })
 }
 
