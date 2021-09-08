@@ -2,6 +2,7 @@ library(maps)
 library(ggplot2)
 library(ggiraph)
 library(dplyr)
+library(rlang)
 library(shiny)
 
 # Define UI for application that draws a histogram
@@ -17,7 +18,18 @@ ui <- fluidPage(
                     min = as.Date("2020-01-01","%Y-%m-%d"),
                     max = as.Date("2021-08-01","%Y-%m-%d"),
                     value=as.Date("2021-01-01"),
-                    timeFormat="%Y-%m-%d") 
+                    timeFormat="%Y-%m-%d") ,
+        
+        selectInput(
+          inputId = "Variable",
+          label = "Variable:",
+          choices = c(
+            "",
+            new_cases  = "new_cases",
+            new_deaths = "new_deaths",
+            people_fully_vaccinated = "people_fully_vaccinated"
+          )
+        )
       ),
 
         # Show a plot of the generated distribution
@@ -66,8 +78,8 @@ server <- function(input, output) {
       
       ggplot() + 
         geom_polygon_interactive(data = subset(temp_covid, lat >= -60 & lat <= 90), size = 0.1, 
-                                 aes(x = long, y = lat, fill = new_cases, group = group)) +
-        theme(legend.position="bottom")
+                                 aes(x = long, y = lat, fill = !! sym(input$Variable), group = group)) +
+        theme(legend.position="bottom") + theme_bw()
     })
 }
 
