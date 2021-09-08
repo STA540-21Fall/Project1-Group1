@@ -27,7 +27,8 @@ ui <- fluidPage(
             "",
             new_cases  = "new_cases",
             new_deaths = "new_deaths",
-            people_fully_vaccinated = "people_fully_vaccinated"
+            people_fully_vaccinated = "people_fully_vaccinated",
+            hosp_patients = "hosp_patients"
           )
         )
       ),
@@ -51,7 +52,7 @@ server <- function(input, output) {
       select(c("location", "date", 
                "new_cases", "total_cases",
                "new_deaths", "total_deaths",
-               "people_fully_vaccinated"))
+               "people_fully_vaccinated", "hosp_patients"))
     
     covid_data$location[covid_data$location == "United States"] <- "USA"
     covid_data$location[covid_data$location == "United Kingdom"] <- "UK"
