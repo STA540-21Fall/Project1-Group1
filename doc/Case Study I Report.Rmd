@@ -17,7 +17,7 @@ To investigate this question, we found a data set from *Our World in Data*, whic
 
 $\\$
 
-$\\$
+The trend plots that plot the new cases, new deaths, vaccination counts, though we excluded the plots for number of people hospitalized due to large amount of missing data in places other than North America. For the new cases, there are three main peaks worldwide across the span of the time line since Jan 2020, while the continents' peaks vary a lot in time and magnitude. The death counts vary even more across locations and we cannot observe a obvious pattern in the aggregated worldwide plot. On the other hand, the trend lines for people fully vaccinated across different continents are similar where most of the curves take off shortly after Jan 2021. In Asia, South America and Europe, we see that after vaccination number increased, new cases decreased as expected, but worldwide we see no correlation between new cases and vaccination, and for continents such as North America and Australia, there is even a positive correlation between the two variables.
 
 $\\$
 
@@ -32,4 +32,3 @@ Kriss JL, Reynolds LE, Wang A, et al. COVID-19 Vaccine Second-Dose Completion an
 “Our World in Data - About.” Our World in Data, ourworldindata.org/about. 
 
 “WHO Coronavirus (COVID-19) Dashboard.” World Health Organization, World Health Organization, covid19.who.int/. 
-
