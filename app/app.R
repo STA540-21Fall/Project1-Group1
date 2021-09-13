@@ -40,7 +40,7 @@ ui <- fluidPage(
       selectInput(
         inputId = "Variable",
         label = "Variable:",
-        choices = c(list("New Cases" = "new_cases"),
+        choices = c("", list("New Cases" = "new_cases"),
           "New Deaths" = "new_deaths",
           "People Fully Vaccinated" = "people_fully_vaccinated",
           "Patients Hospitalized" = "hosp_patients")
@@ -55,7 +55,7 @@ ui <- fluidPage(
           Asia = "Asia",
           Australia = "Australia",
           Europe = "Europe",
-          list("North America"= "North America",
+          list("North America" = "North America",
          "South America" = "South America"),
           World = "World"
         )
@@ -238,7 +238,7 @@ server <- function(input, output) {
   
     
     ggplot(data = temp) +
-      geom_line(aes(x = as.Date(date), y = !! sym(input$Variable))) + 
+      geom_line(aes(x = as.Date(date), y = !! sym(input$Variable))) +
       theme_bw()+
       labs(title = input$Variable, 
            x = "Date", y = "Counts")
