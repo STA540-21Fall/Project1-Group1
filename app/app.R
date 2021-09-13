@@ -1,6 +1,7 @@
 library(maps)
 library(ggplot2)
 library(ggiraph)
+library(gridExtra)
 library(dplyr)
 library(rlang)
 library(shiny)
@@ -71,16 +72,16 @@ ui <- fluidPage(
     # Show a plot of the generated distribution
     mainPanel(
       fluidRow(
-        tags$div(style = "margin: 1%",
+        tags$div(style = "margin : 1%",
                  htmlOutput(outputId = "InfoTitle1"),
                  tabsetPanel(
                    tabPanel(title = "Worldwide Covid19 Cases and Vaccination rate",
-                            tags$div(
-                              splitLayout(style = "border: 1px solid silver:", cellWidths = c("33.33%", "33.33%","33.33%"), 
-                                          plotOutput("distPlot"), 
-                                          plotOutput("distPlot2"),
+                            tags$div(align = "center",
+                              splitLayout(style = "border: 1px solid silver:", cellWidths = c("100%"), 
+                                          plotOutput("distPlot")),
+                              splitLayout(style = "border: 1px solid silver:", cellWidths = c("65%"), 
                                           plotOutput("distPlot3")),
-                              
+                                
                               
                               
                               
@@ -205,14 +206,30 @@ server <- function(input, output) {
   
   
   output$distPlot <- renderPlot({
-    ggplot() +
+    plot1 <- ggplot() +
       geom_polygon_interactive(data = temp_covid2(), size = 0.1,
                                aes(x = long, y = lat, 
                                    fill = new_cases, group = group)) +
       theme(legend.position="bottom") + theme_bw() + coord_fixed() +
-      labs(title = "Covid Cases and Vaccinations", subtitle = "by Country", 
+      labs(title = "Covid Cases", subtitle = "by Country", 
            x = "Lat", y = "Long") +
       scale_fill_gradient(low = "#CC6666", high = "#000066")
+    
+    plot2 <- ggplot() +
+      geom_polygon_interactive(data = temp_covid2(), size = 0.1,
+                               aes(x = long, y = lat, 
+                                   fill = new_deaths, group = group)) +
+      theme(legend.position="bottom") + theme_bw() + coord_fixed() +
+      labs(title = "Death Cases Due to COVID-19", subtitle = "by Country", 
+           x = "Lat", y = "Long") +
+      scale_fill_gradient(low = "#CC6666", high = "#000066")
+    
+    if (input$Continent %in% c("", "World")){
+      grid.arrange(plot1, plot2, ncol = 1)
+    } else{
+      grid.arrange(plot1, plot2, ncol = 2)
+    }
+    
   })#Maps
   
   
@@ -222,7 +239,7 @@ server <- function(input, output) {
                                aes(x = long, y = lat, 
                                    fill = new_deaths, group = group)) +
       theme(legend.position="bottom") + theme_bw() + coord_fixed() +
-      labs(title = "Covid Cases and Vaccinations", subtitle = "by Country", 
+      labs(title = "Death Cases Due to COVID-19", subtitle = "by Country", 
            x = "Lat", y = "Long") +
       scale_fill_gradient(low = "#CC6666", high = "#000066")
   })#Maps
@@ -234,7 +251,7 @@ server <- function(input, output) {
                                aes(x = long, y = lat, 
                                    fill = people_fully_vaccinated, group = group)) +
       theme(legend.position="bottom") + theme_bw() + coord_fixed() +
-      labs(title = "Covid Cases and Vaccinations", subtitle = "by Country", 
+      labs(title = "Vaccinations", subtitle = "by Country", 
            x = "Lat", y = "Long") +
       scale_fill_gradient(low = "#CC6666", high = "#000066")
   })#Maps

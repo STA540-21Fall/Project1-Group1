@@ -72,11 +72,6 @@ covid_data_country_clean <- covid_data_clean[!(covid_data_clean$location %in% c(
 
 
 ```{r}
-summary(covid_data_clean_country)
-
-```
-
-```{r}
 write.csv(x=covid_data_country_clean, file="data/covid_data_country_clean.csv")
 write.csv(x=covid_data_others_clean, file="data/covid_data_others_clean.csv")
 write.csv(x=covid_data_clean, file="data/covid_data_clean.csv")
@@ -85,13 +80,5 @@ write.csv(x=covid_data_clean, file="data/covid_data_clean.csv")
 
 
 
-
-
-```{r}
-
-ggplot(data = covid_data_clean_country, aes(date, new_cases))+
-  geom_point()
-
-```
 
 
