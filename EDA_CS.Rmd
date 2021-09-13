@@ -1,0 +1,128 @@
+---
+title: "EDA"
+author: "Cathy Shi"
+date: "9/1/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r read data}
+covid_data_country <- read.csv("data/covid_data_country_clean.csv")
+covid_data_others <- read.csv("data/covid_data_others_clean.csv") #continent and larger  
+covid_data_clean <- read.csv("data/covid_data_clean.csv")
+vaccine <- read.csv("data/time_series_covid19_vaccine_global.csv")
+```
+
+```{r}
+covid_data_clean = covid_data_clean %>% 
+      transform(new_cases = new_cases/1000,
+                total_cases = total_cases/1000,
+                new_deaths = new_deaths/1000,
+                total_deaths = total_deaths/1000,
+                people_fully_vaccinated = people_fully_vaccinated/1000)
+
+    
+ggplot(data = covid_data_clean) +
+      geom_line(aes(x = as.Date(date), y = people_fully_vaccinated/1000)) +  
+      theme_bw() + 
+      labs(title = input$Variable, 
+           x = "Date", y = "Counts")
+})    
+```
+
+```{r testing}
+ggplot(data = covid_data_country, aes(date, new_cases))+
+  geom_point()
+
+ggplot(covid_data_country, aes(x = date, y = new_cases, group=location)) +
+  geom_line((aes(color = location))) + theme(legend.position = "none") +
+ labs(title = "Covid cases by country")
+
+ggplot(covid_data_others, aes(x = date, y = new_cases, group=location)) +
+  geom_line((aes(color = location))) + #theme(legend.position = "none") +
+ labs(title = "Covid cases at world level")
+temp = covid_data_others %>% 
+  filter(location == "Africa")
+ggplot(data = temp) +
+     geom_line(aes(x = date, y = new_cases, size = 0.1)) + 
+                      
+      theme(legend.position="bottom") + theme_bw() + coord_fixed() +
+      labs(title = "Covid Cases and Vaccination Trend Worldwide", 
+           x = "date", y = "Counts") +
+      scale_fill_gradient(low = "#CC6666", high = "#000066")
+
+#look at the new cases of a selective countries 
+set.seed(1000)
+sample_country <- sample(unique(covid_data_country$location),25,replace=F)
+ggplot(covid_data_country[is.element(covid_data_country$location,sample_country_v),],
+       aes(x=location, y=new_cases, fill=location)) +
+  geom_boxplot() +
+  labs(title="New cases by country",
+       x="Country",y="  New Case Num") + theme_classic() +
+  theme(legend.position="none",axis.text.x = element_text(angle = 45))
+
+#look at the log transformed data
+ggplot(covid_data_country[is.element(covid_data_country$location,sample_country_v),],
+       aes(x=location, y=log(new_cases), fill=location)) +
+  geom_boxplot() +
+  labs(title="Log case number by country",
+       x="Country",y="Log Case Num") + theme_classic() +
+  theme(legend.position="none",axis.text.x = element_text(angle = 45))
+
+
+
+#look at vaccine and testing
+ggplot(covid_data_country, aes(x = date, y = new_cases, group=location)) +
+  geom_line((aes(color = location))) + theme(legend.position = "none") +
+ labs(title = "Covid cases by country")
+
+```
+
+```{r vaccine}
+sample_country_v <- sample(unique(vaccine$Country_Region),25,replace=F)
+#problem: don't know which date
+ggplot(covid_data_country[is.element(covid_data_country$location,sample_country_v),],
+       aes(x=date, fill=location)) +
+  geom_point(aes(y=log(new_cases), color = 'red', alpha = 0.5)) +
+  geom_point(aes(y=log(total_vaccinations), color = "blue", alpha = 0.5)) +
+  labs(title="Fully vaccinated counts by country",
+       x="Date",y="Vaccinated vs. new cases") + theme_classic() +
+  theme(legend.position="none",axis.text.x = element_text(angle = 45))
+#after log
+ggplot(vaccine[is.element(vaccine$Country_Region,sample_country_v),],
+       aes(x=Country_Region, y=log(People_fully_vaccinated), fill=Country_Region)) +
+  geom_boxplot() +
+  labs(title="Fully vaccinated counts by country",
+       x="Country",y="People vaccine counts") + theme_classic() +
+  theme(legend.position="none",axis.text.x = element_text(angle = 45))
+
+
+ggplot(vaccine[is.element(vaccine$Country_Region,sample_country_v),], aes(x = Date, y = People_fully_vaccinated, group=Country_Region), alpha = 0.7) +
+  geom_point((aes(color = Country_Region)), alpha = 0.55) + theme(legend.position = "none") +
+ labs(title = "Fully vaccinated counts by country") + theme_classic() +
+  theme(legend.position="none",axis.text.x = element_text(angle = 90))
+#after log
+ggplot(vaccine[is.element(vaccine$Country_Region,sample_country_v),], aes(x = Date, y = log(People_fully_vaccinated), group=Country_Region)) +
+  geom_point((aes(color = Country_Region)), alpha = 0.55) + theme(legend.position = "none") +
+ labs(title = "Fully vaccinated counts by country") + theme_classic() +
+  theme(legend.position="none",axis.text.x = element_text(angle = 90))
+```
+
+```{r}
+summary(covid_data_country)
+unique(vaccine$Country_Region)
+```
+```{r}
+ggplot(covid_data_others, aes(x = date, y = new_cases, group=location)) +
+  geom_line((aes(color = location))) + theme(legend.position = "none") +
+ labs(title = "Covid cases by country")
+```
+
