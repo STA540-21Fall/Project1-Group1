@@ -13,9 +13,8 @@ Cathy, CD, EF and GH identify a topic/problem of interest and designed the study
 
 ## Data Sources:
 
-- Our World in Data. Github: https://github.com/owid/covid-19-data/blob/master/public/data/README.md
-
-Our World in Data is a project collaborated by researchers at the University of Oxford and Global Change Data Lab with a mission to make knowledge and data more accessible for research. For more information about Our World in Data, please visit their website at https://ourworldindata.org/
+* Our World in Data. Github: https://github.com/owid/covid-19-data/blob/master/public/data/README.md
+* Our World in Data is a project collaborated by researchers at the University of Oxford and Global Change Data Lab with a mission to make knowledge and data more accessible for research. For more information about Our World in Data, please visit their website at https://ourworldindata.org/
 
 - World Map Data in ggplot2.
 
