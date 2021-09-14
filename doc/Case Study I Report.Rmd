@@ -5,24 +5,26 @@ date: "9/9/2021"
 output: pdf_document
 ---
 
+### Introduction
 
-According to World Health Organization, more than 222 million COVID-19 cases are confirmed and more than 4 million people died due to COVID-19 globally as of September 6, 2021 (WHO COVID Dashboard). Due to the highly contagious nature of COVID-19, people have been negatively impacted across every major aspect of their lives. Fortunately, the U.S. Food and Drug Administration issued an emergency use authorization for the Pfizer-BioNTech vaccine and the Moderna Vaccine in December 2020 (Kriss JL, Reynolds LE, Wang A, et al.). However, according to a survey conducted by AP-NORC in July 2021, about 30% of adults in Americans are still not very confident or not confident at all about the vaccines (AP-NORC Center for Public Affairs Research).
+According to World Health Organization, more than 222 million COVID-19 cases are confirmed and more than 4 million people died due to COVID-19 globally as of September 6, 2021 (WHO COVID Dashboard). Due to the highly contagious nature of COVID-19, people have been negatively impacted across every major aspect of their lives. The U.S. Food and Drug Administration issued an emergency use authorization for the Pfizer-BioNTech vaccine and the Moderna Vaccine in December 2020 (Kriss JL, Reynolds LE, Wang A, et al.). However, according to a survey conducted by AP-NORC in July 2021, about 30% of adults in Americans are still not very confident or not confident at all about the vaccines (AP-NORC Center for Public Affairs Research).
 
 In this project, we conducted a preliminary exploration of the relationship between COVID-19 cases, deaths due to COVID_19, and vaccination rates on the global level. Specifically, we built an interactive R Shiny app that allows users to visualize COVID-19 cases, death cases, and the population that has been fully vaccinated for each country on the world map. Users would be able to visualize the data on a specific date from January 1, 2020, to August 1, 2021. With the visualization, users would be able to explore the temporal trend of COVID-19 cases, death cases due to COVID-19, and their correlation with vaccination rate.
 
-To investigate this question, we found a data set from *Our World in Data*, which is a project collaborated by researchers at the University of Oxford and Global Change Data Lab with a mission to make knowledge and data more accessible for research. Global Change Data Lab has received grants from the Quadrature Climate Foundation, the Bill and Melinda Gates Foundation, the World Health Organization, and the Department of Health and Social Care in the United Kingdom (Our World in Data - About). The data set contains time-series data of new covid cases, cumulative COVID-19 cases, new death cases, cumulative death cases, the population that has been fully vaccinated, and other covariates that can be helpful for our analysis for each country on each date since the outbreak of COVID-19 in 2020. We chose this data set because it has contains data related to COVID-19 and certain country-specific data for each country on each date. We also utilized the *world map* data set from *ggplot2* for visualization on the R Shiny app.
+### Data Acquisition and Data Cleaning
+
+To investigate this question, we found a data set from *Our World in Data*, which is a project collaborated by researchers at the University of Oxford and Global Change Data Lab with a mission to make knowledge and data more accessible for research. Global Change Data Lab has received grants from the Quadrature Climate Foundation, the Bill and Melinda Gates Foundation, the World Health Organization, and the Department of Health and Social Care in the United Kingdom (Our World in Data - About). The data set contains time-series data of new COVID-19 cases, cumulative COVID-19 cases, new death cases, cumulative death cases, the population that has been fully vaccinated, and other covariates that can be helpful for our analysis for each country on each date since the outbreak of COVID-19 in 2020. We chose this data set because it has contains data related to COVID-19 and certain country-specific data for each country on each date. We also utilized the *world map* data set from *ggplot2* for visualization on the R Shiny app.
 
 
-*We can put our findings below*
-
-$\\$
+### Visualization and Observation
 
 The trend plots that plot the new cases, new deaths, vaccination counts, though we excluded the plots for number of people hospitalized due to large amount of missing data in places other than North America. For the new cases, there are three main peaks worldwide across the span of the time line since Jan 2020, while the continents' peaks vary a lot in time and magnitude. The death counts vary even more across locations and we cannot observe a obvious pattern in the aggregated worldwide plot. On the other hand, the trend lines for people fully vaccinated across different continents are similar where most of the curves take off shortly after Jan 2021. In Asia, South America and Europe, we see that after vaccination number increased, new cases decreased as expected, but worldwide we see no correlation between new cases and vaccination, and for continents such as North America and Australia, there is even a positive correlation between the two variables.
 
-$\\$
+
+### Conclusion
 
 
-Reference:
+### Reference
 
 AP-NORC Center for Public Affairs Research.  (July, 2021). “Many Have Doubts about COVID-19 Vaccine Effectiveness against New Strains” https://apnorc.org/projects/many-have-doubts-about-covid-19-vaccine-effectiveness-against-new-strains/
 
