@@ -49,8 +49,7 @@ ui <- fluidPage(
         label = "Variable:",
         choices = c("", list("New Cases" = "new_cases"),
           "New Deaths" = "new_deaths",
-          "People Fully Vaccinated" = "people_fully_vaccinated",
-          "Patients Hospitalized" = "hosp_patients")
+          "People Fully Vaccinated" = "people_fully_vaccinated")
         
       ),
       selectInput(
@@ -75,7 +74,7 @@ ui <- fluidPage(
         tags$div(style = "margin : 1%",
                  htmlOutput(outputId = "InfoTitle1"),
                  tabsetPanel(
-                   tabPanel(title = "Worldwide Covid19 Cases and Vaccination rate",
+                   tabPanel(title = "Worldwide Covid19 Cases and Vaccination Rate",
                             tags$div(align = "center",
                               splitLayout(style = "border: 1px solid silver:", cellWidths = c("100%"), 
                                           plotOutput("distPlot")),
@@ -93,9 +92,14 @@ ui <- fluidPage(
                             tags$div(
                               plotOutput("trendPlot")
                               #DT::dataTableOutput(outputId = "tb"),
-                            ))
-                 )
-        ),
+                            )),
+                  tabPanel(title = "Worldwide Covid 19 Cases & Deaths vs. Vaccination Rate Plot",
+                          br(),
+                          tags$div(
+                            plotOutput("ratioPlot")
+                          ))
+                )
+        ),   
         htmlOutput(outputId = "ref"),
         
       ) # fluidRow
@@ -136,13 +140,13 @@ server <- function(input, output) {
     select(c("location", "date", 
              "new_cases", "total_cases",
              "new_deaths", "total_deaths",
-             "people_fully_vaccinated", "hosp_patients"))
+             "people_fully_vaccinated", "population"))
   
   covid_data_others <- covid_data_others %>% 
     select(c("location", "date", 
              "new_cases", "total_cases",
              "new_deaths", "total_deaths",
-             "people_fully_vaccinated", "hosp_patients"))
+             "people_fully_vaccinated", "population"))
   
   covid_data$location[covid_data$location == "United States"] <- "USA"
   covid_data$location[covid_data$location == "United Kingdom"] <- "UK"
@@ -282,9 +286,24 @@ server <- function(input, output) {
       labs(title = input$Variable, 
            x = "Date", y = "Counts")
   })
+
   
   
-  
+  output$ratioPlot <- renderPlot({
+    
+    temp3 <- covid_data_others %>% 
+      filter(location == input$Continent)
+    
+    
+    ggplot(data = temp3) +
+      geom_point(aes(y = !! sym(input$Variable)/population, 
+                     x = people_fully_vaccinated/population), alpha = 0.3) +
+      xlim(0, 1) +
+      theme(legend.position = "none") +
+      labs(title = "Proportion Plot", 
+           subtitle = "by Continent", y = "Proportion of Variable", 
+           x = "Proportion of Population Fully Vaccinated")
+  })
   
   
 }
