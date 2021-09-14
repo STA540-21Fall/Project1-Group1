@@ -40,6 +40,10 @@ For our project, we used worldwide COVID-19 related data collected from various 
 
 In the future, we could let the shiny app take live data and work on animating the app, so we could see the map change over time. We could also incorporate more accurate hospitalization data with less missing values.
 
+### R Shiny App
+
+The R shiny app can be found in the `app` folder of our Github repository: https://github.com/STA540-21Fall/Project1-Group1
+
 
 ### Reference
 
