@@ -7,7 +7,7 @@ output: pdf_document
 
 ### Introduction
 
-According to World Health Organization, more than 222 million COVID-19 cases are confirmed and more than 4 million people died due to COVID-19 globally as of September 6, 2021 (WHO COVID Dashboard). Due to the highly contagious nature of COVID-19, people have been negatively impacted across every major aspect of their lives. The U.S. Food and Drug Administration issued an emergency use authorization for the Pfizer-BioNTech vaccine and the Moderna Vaccine in December 2020 (Kriss JL, Reynolds LE, Wang A, et al.). However, according to a survey conducted by AP-NORC in July 2021, about 30% of adults in Americans are still not very confident or not confident at all about the vaccines (AP-NORC Center for Public Affairs Research).
+According to World Health Organization, more than 222 million COVID-19 cases are confirmed and more than 4 million people died due to COVID-19 globally as of September 6, 2021 (WHO Coronavirus (COVID-19) Dashboard). Due to the highly contagious nature of COVID-19, people have been negatively impacted across every major aspect of their lives. The U.S. Food and Drug Administration issued an emergency use authorization for the Pfizer-BioNTech vaccine and the Moderna Vaccine in December 2020 (Kriss JL, Reynolds LE, Wang A, et al.). However, according to a survey conducted by AP-NORC in July 2021, about 30% of adults in Americans are still not very confident or not confident at all about the vaccines (AP-NORC Center for Public Affairs Research).
 
 In this project, we conducted a preliminary exploration of the relationship between COVID-19 cases, deaths due to COVID-19, and vaccination rates on the global level. Specifically, we built an interactive R Shiny app that allows users to visualize COVID-19 cases, death cases, and the population that has been fully vaccinated for each country on the world map. Users would be able to visualize the data on a specific date from January 1, 2020, to August 1, 2021. With the visualization, users would be able to explore the temporal trend of COVID-19 cases, death cases due to COVID-19, and their correlation with vaccination rate.
 
@@ -52,6 +52,6 @@ AP-NORC Center for Public Affairs Research.  (July, 2021). “Many Have Doubts a
 Kriss JL, Reynolds LE, Wang A, et al. COVID-19 Vaccine Second-Dose Completion and Interval Between First and Second Doses Among Vaccinated Persons - United States, December 14, 2020-February 14, 2021. MMWR Morb Mortal Wkly Rep 2021;70:389–395. DOI: http://dx.doi.org/10.15585/mmwr.mm7011e2external icon.
 
 
-“Our World in Data - About.” Our World in Data, ourworldindata.org/about. 
+“Our World in Data - About.” *Our World in Data*, ourworldindata.org/about. 
 
-“WHO Coronavirus (COVID-19) Dashboard.” World Health Organization, World Health Organization, covid19.who.int/. 
+“WHO Coronavirus (COVID-19) Dashboard.” World Health Organization, *World Health Organization*, covid19.who.int/. 
